@@ -35,9 +35,6 @@
          <pointsize>22</pointsize>
         </font>
        </property>
-       <property name="editTriggers">
-        <set>QAbstractItemView::NoEditTriggers</set>
-       </property>
       </widget>
      </item>
      <item>

@@ -4,15 +4,15 @@
 #include <QDebug>
 
 CameraInputManager::CameraInputManager()
-	: m_camDevice(new kipr::camera::Device()),
+	: m_camDevice(new Camera::Device()),
 	m_source(CameraInputManager::UsbCamera),
 	m_timer(new QTimer(this)),
 	m_frameRate(1),
 	m_refs(0),
 	m_reentryBarrier(false)
 {
-	qRegisterMetaType<kipr::camera::Image>("kipr::camera::Image");
-	m_image = kipr::camera::Image();
+	qRegisterMetaType<cv::Mat>("cv::Mat");
+	m_image = cv::Mat();
 	connect(m_timer, SIGNAL(timeout()), SLOT(updateCamera()));
 }
 
@@ -39,6 +39,16 @@ int CameraInputManager::frameRate() const
 	return m_frameRate;
 }
 
+void CameraInputManager::setWidth(const unsigned width)
+{
+	m_camDevice->setWidth(width);
+}
+
+void CameraInputManager::setHeight(const unsigned height)
+{
+	m_camDevice->setHeight(height);
+}
+	
 bool CameraInputManager::retain()
 {
 	++m_refs;
@@ -71,7 +81,7 @@ bool CameraInputManager::isOpen() const
 	return m_camDevice->isOpen();
 }
 
-kipr::camera::Image CameraInputManager::image() const
+cv::Mat CameraInputManager::image() const
 {
 	return m_image;
 }
@@ -104,12 +114,12 @@ void CameraInputManager::updateCamera()
 		// ui->camera->setInvalid(true);
 		m_camDevice->close();
 		setFrameRate(1);
-		m_image = kipr::camera::Image();
+		m_image = cv::Mat();
 	}
   else
     m_image = m_camDevice->rawImage();
 	
-	if(!m_image.isEmpty()) emit frameAvailable(m_image);
+	if(!m_image.empty()) emit frameAvailable(m_image);
 	m_reentryBarrier = false;
 }
 

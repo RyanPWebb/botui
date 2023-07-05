@@ -1,6 +1,6 @@
 #include "CameraLiveWidget.h"
 #include "ui_CameraLiveWidget.h"
-#include "kipr/camera/camera.h"
+#include "kipr/camera.h"
 
 #include <QDebug>
 #include <QStringListModel>
@@ -17,6 +17,12 @@
 #include <QItemDelegate>
 #include <QPainter>
 #include <QDebug>
+
+#ifdef WALLABY
+#include <wallaby/camera.hpp>
+#else
+#include <kovan/camera.hpp>
+#endif
 
 CameraLiveWidget::CameraLiveWidget(Device *device, QWidget *parent)
   : StandardWidget(device, parent),

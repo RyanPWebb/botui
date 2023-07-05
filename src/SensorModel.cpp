@@ -1,15 +1,23 @@
 #include "SensorModel.h"
 
-#include <kipr/analog/analog.hpp>
-#include <kipr/digital/digital.hpp>
-#include <kipr/accel/accel.hpp>
-#include <kipr/gyro/gyro.hpp>
-#include <kipr/magneto/magneto.hpp>
-#include <kipr/sensor/logic.hpp>
-#include <kipr/button/button.h>
-#include <kipr/button/button.hpp>
+#ifdef WALLABY
+#include <kipr/analog.hpp>
+#include <kipr/digital.hpp>
+#include <kipr/accel.hpp>
+#include <kipr/gyro.hpp>
+#include <kipr/magneto.hpp>
+#include <kipr/sensor_logic.hpp>
+#include <kipr/general.h>
+#include <kipr/button.h>
+#include <kipr/button.hpp>
+#else
+#include <kovan/analog.hpp>
+#include <kovan/digital.hpp>
+#include <kovan/accel.hpp>
+#include <kovan/sensor_logic.hpp>
+#include <kovan/general.h>
+#endif
 
-using namespace kipr::sensor;
 
 #include <math.h>
 
@@ -152,6 +160,7 @@ SensorModel::SensorType SensorModel::type(const QModelIndex &index) const
 
 void SensorModel::update()
 {
+	publish();
 	for(int i = 0; i < rowCount(); ++i) {
 		Updateable *updateable = Updateable::cast(item(i, 1));
 		if(!updateable) continue;
@@ -180,7 +189,7 @@ void SensorModel::populateAnalog(const unsigned char port)
 {
 	appendRow(QList<QStandardItem *>()
 		<< new SensorNameItem(SensorModel::Analog, port)
-		<< new SensorValueItem<unsigned short>(new kipr::analog::Analog(port), true));
+		<< new SensorValueItem<unsigned short>(new ::Analog(port), true));
 
 }
 
@@ -189,11 +198,11 @@ void SensorModel::populateDigital(const unsigned char port)
 #ifdef WALLABY
 	appendRow(QList<QStandardItem *>()
 		<< new SensorNameItem(SensorModel::Digital, port)
-		<< new SensorValueItem<bool>(new kipr::digital::Digital(port), true));
+		<< new SensorValueItem<bool>(new ::Digital(port), true));
 #else
 	appendRow(QList<QStandardItem *>()
 		<< new SensorNameItem(SensorModel::Digital, port)
-		<< new SensorValueItem<bool>(new logic::Not(new kipr::digital::Digital(port), true), true));
+		<< new SensorValueItem<bool>(new SensorLogic::Not(new ::Digital(port), true), true));
 #endif
 }
 
@@ -201,13 +210,13 @@ void SensorModel::populateAccel()
 {
 	appendRow(QList<QStandardItem *>()
 		<< new SensorNameItem(SensorModel::AccelX)
-		<< new SensorValueItem<short>(new kipr::accel::AccelX(), true));
+		<< new SensorValueItem<short>(new ::AccelX(), true));
 	appendRow(QList<QStandardItem *>()
 		<< new SensorNameItem(SensorModel::AccelY)
-		<< new SensorValueItem<short>(new kipr::accel::AccelY(), true));
+		<< new SensorValueItem<short>(new ::AccelY(), true));
 	appendRow(QList<QStandardItem *>()
 		<< new SensorNameItem(SensorModel::AccelZ)
-		<< new SensorValueItem<short>(new kipr::accel::AccelZ(), true));
+		<< new SensorValueItem<short>(new ::AccelZ(), true));
 }
 
 #ifdef WALLABY

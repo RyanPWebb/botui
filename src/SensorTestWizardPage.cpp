@@ -4,7 +4,13 @@
 #include <QTimer>
 
 
-#include <kipr/analog/analog.h>
+#ifdef WALLABY
+#include <wallaby/general.h>
+#include <wallaby/analog.h>
+#else
+#include <kovan/general.h>
+#include <kovan/analog.h>
+#endif
 
 SensorTestWizardPage::SensorTestWizardPage(QWidget *parent)
 	: QWizardPage(parent),
@@ -34,6 +40,7 @@ void SensorTestWizardPage::cleanupPage()
 
 void SensorTestWizardPage::update()
 {
+	publish();
 	ui->plot->push(m_plot, analog10(0));
 	ui->plot->inc();
 }

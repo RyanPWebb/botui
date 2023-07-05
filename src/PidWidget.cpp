@@ -4,7 +4,13 @@
 #include "ArrayHelpers.h"
 #include "NumpadDialog.h"
 
-#include <kipr/motor/motor.h>
+#ifdef WALLABY
+#include <wallaby/motors.h>
+#include <wallaby/general.h>
+#else
+#include <kovan/motors.h>
+#include <kovan/general.h>
+#endif
 
 #include <QTimer>
 #include <QDebug>
@@ -65,4 +71,5 @@ void PidWidget::go()
 	int position = ui->position->text().toDouble();
 	qDebug() << position;
 	move_to_position(m_currentPort, position, ui->speed->value());
+	publish();
 }

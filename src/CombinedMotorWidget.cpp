@@ -6,7 +6,11 @@
 
 #include <math.h>
 
-#include <kipr/kipr.h>
+#ifdef WALLABY
+#include <wallaby/wallaby.h>
+#else
+#include <kovan/kovan.h>
+#endif
 
 #include "NumpadDialog.h"
 #include "MenuBar.h"
@@ -61,12 +65,17 @@ CombinedMotorWidget::CombinedMotorWidget(Device *device, QWidget *parent)
 		-1500, 1500, this));
 	
 	ao();
+#ifdef A_KOVAN
+	publish();
+#endif
 }
 
 CombinedMotorWidget::~CombinedMotorWidget()
 {
 	ao();
-
+#ifdef A_KOVAN
+	publish();
+#endif
 	delete ui;
 }
 
@@ -76,14 +85,18 @@ void CombinedMotorWidget::pwmChanged(double pwm)
 	ui->bk->setEnabled(pwm > -99.5);
 	ui->pwmStop->setEnabled(qAbs(pwm) > 0.5);
 	motor_power(ui->motors->currentIndex(), pwm);
-
+#ifdef A_KOVAN
+	publish();
+#endif
 }
 
 void CombinedMotorWidget::velChanged(double vel)
 {
 	ui->velocityStop->setEnabled(qAbs(vel) > 0.5);
 	move_at_velocity(ui->motors->currentIndex(), vel);
-
+#ifdef A_KOVAN
+	publish();
+#endif
 }
 
 void CombinedMotorWidget::tabChanged(int i)
@@ -96,7 +109,9 @@ void CombinedMotorWidget::go()
 	move_to_position(ui->motors->currentIndex(),
 		ui->speed->text().toInt(),
 		ui->goalPos->text().toInt());
-
+#ifdef A_KOVAN
+	publish();
+#endif
 }
 
 void CombinedMotorWidget::forward()
@@ -111,7 +126,9 @@ void CombinedMotorWidget::backward()
 
 void CombinedMotorWidget::update()
 {
-
+#ifdef A_KOVAN
+	publish();
+#endif
 	int port = ui->motors->currentIndex();
 	ui->position->setText(QString::number(get_motor_position_counter(port)));
 	ui->positionStop->setEnabled(get_motor_done(port) ? false : true);
