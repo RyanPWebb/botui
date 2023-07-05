@@ -3,9 +3,11 @@
 
 #include "StandardWidget.h"
 
-#include <kipr/config/config.hpp>
-
-using namespace kipr::config;
+#ifdef WALLABY
+#include <wallaby/config.hpp>
+#else
+#include <kovan/config.hpp>
+#endif
 
 #include <QModelIndex>
 

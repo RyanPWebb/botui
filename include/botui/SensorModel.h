@@ -14,7 +14,7 @@ public:
 		AccelX,
 		AccelY,
 		AccelZ,
-#ifdef WOMBAT
+#ifdef WALLABY
 		GyroX,
 		GyroY,
 		GyroZ,
@@ -39,7 +39,7 @@ private:
 	void populateAnalog(const unsigned char port);
 	void populateDigital(const unsigned char port);
 	void populateAccel();
-#ifdef WOMBAT
+#ifdef WALLABY
 	void populateGyro();
 	void populateMagneto();
 	void populateButtons();

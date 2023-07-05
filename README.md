@@ -11,6 +11,7 @@ Requirements
 ============
 * [pcompiler ](https://github.com/kipr/pcompiler)
 * CMake 2.6.0 or later
+* OpenCV
 * [Qt >= 4.7.4](https://www.qt.io/download-qt-installer)
 
 
@@ -21,7 +22,7 @@ git clone https://github.com/kipr/botui
 cd botui
 mkdir build
 cd build
-cmake .. or /home/<container name>/qt-raspi/bin/qt-cmake -Ddocker_cross=ON .. (for docker cross compilation)
+cmake ..
 make -j4
 sudo make install
 ```

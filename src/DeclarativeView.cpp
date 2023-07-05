@@ -1,11 +1,10 @@
 #include "DeclarativeView.h"
 
 #include <QFileSystemWatcher>
-#include <QQmlEngine>
-#include <QtWidgets>
+#include <QDeclarativeEngine>
 
 DeclarativeView::DeclarativeView(const QUrl& url, const bool& autoReload, QWidget *parent)
-	: QQuickWidget(url, parent), m_autoReload(false), m_watcher(0)
+	: QDeclarativeView(url, parent), m_autoReload(false), m_watcher(0)
 {
 	setAutoReload(autoReload);
 }

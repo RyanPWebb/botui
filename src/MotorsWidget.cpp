@@ -6,7 +6,12 @@
 #include "Device.h"
 #include "NumpadDialog.h"
 
-#include <kipr/kipr.h>
+#ifdef WALLABY
+#include "wallaby/wallaby.h"
+#else
+#include "kovan/kovan.h"
+#endif
+
 #include <QTimer>
 #include <QDebug>
 
@@ -34,6 +39,7 @@ MotorsWidget::MotorsWidget(Device *device, QWidget *parent)
 	ui->dial->setLabel(0);
 	ui->_0->setEnabled(false);
 	ao();
+	publish();
 	
 	QTimer *timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), SLOT(update()));
@@ -43,6 +49,7 @@ MotorsWidget::MotorsWidget(Device *device, QWidget *parent)
 MotorsWidget::~MotorsWidget()
 {
 	ao();
+	publish();
 	delete ui;
 	delete m_provider;
 }
@@ -52,6 +59,7 @@ void MotorsWidget::valueChanged(const double &value)
 	ui->number->setText(QString::number((int)ui->dial->value()));
 	
 	motor(ui->dial->label(), value);
+	publish();
 }
 
 void MotorsWidget::activeChanged()
@@ -84,5 +92,6 @@ void MotorsWidget::manualEntry(const QString &text)
 
 void MotorsWidget::update()
 {
+	publish();
 	ui->ticks->setText(QString::number(get_motor_position_counter(ui->dial->label())));
 }

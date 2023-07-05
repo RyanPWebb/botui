@@ -1,7 +1,11 @@
 #include "MotorTestWizardPage.h"
 #include "ArrayHelpers.h"
 
-#include <kipr/kipr.h>
+#ifdef WALLABY
+#include "wallaby/wallaby.h"
+#else
+#include "kovan/kovan.h"
+#endif
 
 #include <QTimer>
 

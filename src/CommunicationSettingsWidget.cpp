@@ -5,8 +5,11 @@
 #include "SystemUtils.h"
 #include "MenuBar.h"
 
-#include <kipr/config/config.hpp>
-using namespace kipr::config;
+#ifdef WALLABY
+#include <wallaby/config.hpp>
+#else
+#include <kovan/config.hpp>
+#endif
 
 #include <QString>
 #include <QDebug>

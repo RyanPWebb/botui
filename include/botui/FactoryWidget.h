@@ -1,36 +1,31 @@
 #ifndef _FACTORYWIDGET_H_
 #define _FACTORYWIDGET_H_
 
-#include "StandardWidget.h"
-
-#include <QString>
-#include <QProcess>
-#include <QDir>
+#include <QWidget>
 
 namespace Ui
 {
-        class FactoryWidget;
+	class FactoryWidget;
 }
 
-class InputProviderDialog;
+class NumpadDialog;
+class Device;
 
-class FactoryWidget : public StandardWidget
+class FactoryWidget : public QWidget
 {
 Q_OBJECT
 public:
-        FactoryWidget(Device *device, QWidget *parent = 0);
-        ~FactoryWidget();
-
+	FactoryWidget(Device *device, QWidget *parent = 0);
+	~FactoryWidget();
+	
 public slots:
-        void confirm();
-        void reflash();
-        void experimental();
-
+	void confirm();
+	
 private:
-        Ui::FactoryWidget *ui;
-        InputProviderDialog *m_provider;
-        QProcess *m_consoleProc;
+	Device *m_device;
+	NumpadDialog *m_serialNumpad;
+	
+	Ui::FactoryWidget *ui;
 };
-
 
 #endif

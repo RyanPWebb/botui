@@ -24,12 +24,12 @@ void StandardWidget::performStandardSetup(const QString& title, const bool &stat
 {
 	m_menuBar->addHomeAndBackButtons();
 	m_menuBar->setTitle(title);
-	if (layout()) layout()->setMenuBar(m_menuBar);
+	layout()->setMenuBar(m_menuBar);
 	
 	if(!statusBar) return;
 	m_statusBar = new StatusBar(this);
 	m_statusBar->loadDefaultWidgets(m_device);
-	if (layout()) layout()->addWidget(m_statusBar);
+	layout()->addWidget(m_statusBar);
 }
 
 Device *StandardWidget::device() const

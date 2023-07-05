@@ -1,6 +1,8 @@
 #ifndef _OPTIONS_H_
 #define _OPTIONS_H_
 
-#define NETWORK_ENABLED 1
+#ifdef QT_DBUS_LIB
+#define NETWORK_ENABLED
+#endif
 
 #endif

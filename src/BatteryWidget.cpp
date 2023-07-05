@@ -2,9 +2,8 @@
 #include "BatteryLevelProvider.h"
 
 #include "Device.h"
-#include "kipr/wombat.h"
-#include "WombatBatteryProvider.h"
-#include <kipr/battery/battery.h>
+#include "WallabyDevice.h"
+#include "WallabyBatteryProvider.h"
 
 #include <QPainter>
 #include <QTimer>
@@ -68,7 +67,7 @@ void BatteryWidget::paintEvent(QPaintEvent *event)
 
 	QString battTypeString = QString("    ");
 
-	int battTypeInt = ((Wombat::BatteryLevelProvider *)m_batteryLevelProvider)->batteryType();
+	int battTypeInt = ((Wallaby::BatteryLevelProvider *)m_batteryLevelProvider)->batteryType();
 
 	switch(battTypeInt)
 	{

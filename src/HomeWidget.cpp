@@ -33,7 +33,7 @@ HomeWidget::HomeWidget(Device *device, QWidget *parent)
 	connect(ui->settings, SIGNAL(clicked()), SLOT(settings()));
 
 	// TODO: fix fileManager and then remove this line
-	ui->fileManager->setVisible(true);
+	ui->fileManager->setVisible(false);
 
 	//QAction *lock = menuBar()->addAction(UiStandards::lockString());
 	// connect(lock, SIGNAL(triggered()), SLOT(lock()));
@@ -74,12 +74,11 @@ void HomeWidget::settings()
 void HomeWidget::about()
 {
 	RootController::ref().presentWidget(new AboutWidget(device()));
-	
 }
 
 void HomeWidget::shutDown()
 {
-#ifdef WOMBAT
+#ifdef WALLABY
   if(QMessageBox::question(this, "Shut Down?", "After system halted, slide power switch off or disconnect battery.\n\nContinue?", QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
     return;
   
