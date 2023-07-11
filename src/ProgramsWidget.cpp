@@ -60,10 +60,10 @@ ProgramsWidget::ProgramsWidget(Device *device, QWidget *parent)
 	// TODO: remove these once the buttons all work
 	ui->edit->setVisible(true);
 	ui->add->setVisible(false);
-	ui->remove->setVisible(false);
+	ui->remove->setVisible(true);
 	ui->args->setVisible(false);
 	ui->transfer->setVisible(false);
-	ui->compile->setVisible(false);
+	ui->compile->setVisible(true);
 
 	connect(ui->programs->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
 		SLOT(update()));
@@ -237,7 +237,7 @@ void ProgramsWidget::compile()
 
 	QString binFilePath = projectPath + "bin/botball_user_program";
 
-        QString compileCommand = "gcc -o " + binFilePath + " -lwallaby -lpthread -lm -I " + includeDir.absolutePath() + " " + srcDir.absolutePath() + "/*.c";
+        QString compileCommand = "gcc -o " + binFilePath + " -lkipr -lpthread -lm -I " + includeDir.absolutePath() + " " + srcDir.absolutePath() + "/*.c";
 	qDebug() << compileCommand;
 
 	QByteArray ba = compileCommand.toLatin1();
