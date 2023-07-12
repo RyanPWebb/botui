@@ -63,8 +63,8 @@ ProgramsWidget::ProgramsWidget(Device *device, QWidget *parent)
 	ui->remove->setVisible(true);
 	ui->args->setVisible(false);
 	ui->transfer->setVisible(false);
-	ui->compile->setVisible(true);
-	ui->compile->setEnabled(true);
+	//ui->compile->setVisible(true);
+	
 
 	connect(ui->programs->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
 		SLOT(update()));
@@ -310,6 +310,7 @@ void ProgramsWidget::update()
 	ui->edit->setEnabled(good);
 	ui->remove->setEnabled(good);
 	ui->args->setEnabled(good);
+	ui->compile->setEnabled(good);
   const QDir flashDrive("/kovan/media/sda1");
 	ui->transfer->setEnabled(good && flashDrive.exists());
 }
